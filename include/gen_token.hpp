@@ -124,6 +124,7 @@ typedef enum {
 	ShortHashDereference,
 	ShortCodeDereference,
 	ArraySizeDereference,
+	PostfixArrayDereference,
 	Key,
 	BareWord,
 	Arrow,

@@ -291,6 +291,7 @@ private:
 	void annotateReservedKeyword(LexContext *ctx, const std::string &data, Token *tk, TokenInfo *info);
 	void annotateGlobOrMul(LexContext *ctx, const std::string &data, Token *tk, TokenInfo *info);
 	void annotateNamelessFunction(LexContext *ctx, const std::string &data, Token *tk, TokenInfo *info);
+	void annotatePostfixDereference(LexContext *ctx, const std::string &data, Token *tk, TokenInfo *info);
 	void annotateLocalVariable(LexContext *ctx, const std::string &data, Token *tk, TokenInfo *info);
 	void annotateVariable(LexContext *ctx, const std::string &data, Token *tk, TokenInfo *info);
 	void annotateGlobalVariable(LexContext *ctx, const std::string &data, Token *tk, TokenInfo *info);

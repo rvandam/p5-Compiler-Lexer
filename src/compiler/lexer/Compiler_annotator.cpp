@@ -41,6 +41,7 @@ void Annotator::annotate(LexContext *ctx, Token *tk)
 	ANNOTATE(annotateReservedKeyword, data, info);
 	ANNOTATE(annotateGlobOrMul, data, info);
 	ANNOTATE(annotateNamelessFunction, data, info);
+    ANNOTATE(annotatePostfixDereference, data, info);
 	ANNOTATE(annotateLocalVariable, data, info);
 	ANNOTATE(annotateVariable, data, info);
 	ANNOTATE(annotateGlobalVariable, data, info);
@@ -86,6 +87,8 @@ void Annotator::annotateNamespace(LexContext *ctx, const string &data, Token *tk
 		next_tk->info.type != String && next_tk->info.type != RawString) {
 		char data_front = tk->_data[0];
 		if (data_front == '$' || data_front == '@' || data_front == '%') {
+            annotatePostfixDereference(ctx, data, tk, info);
+            if (info->type != Undefined) return;
 			annotateLocalVariable(ctx, data, tk, info);
 			if (info->type != Undefined) return;
 			annotateVariable(ctx, data, tk, info);
@@ -197,6 +200,16 @@ void Annotator::annotateNamelessFunction(LexContext *ctx, const string &, Token 
 	if (ctx->prev_type == FunctionDecl && tk->_data[0] == '{') {
 		*info = ctx->tmgr->getTokenInfo(tk->_data);
 	}
+}
+
+
+void Annotator::annotatePostfixDereference(LexContext *ctx, const string &data, Token *tk, TokenInfo *info)
+{
+    printf("prev_type: %d\n", ctx->prev_type);
+    if (ctx->prev_type == Pointer && tk->_data[0] == '@') {
+        *info = ctx->tmgr->getTokenInfo(PostfixArrayDereference);
+    }
+    // FIXME: add other dereferences
 }
 
 void Annotator::annotateLocalVariable(LexContext *ctx, const string &data, Token *, TokenInfo *info)

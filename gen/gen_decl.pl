@@ -495,6 +495,7 @@ Modifier        	ShortArrayDereference	@$
 Modifier        	ShortHashDereference	%$
 Modifier        	ShortCodeDereference	&$
 Modifier        	ArraySizeDereference	$#{
+Modifier        	PostfixArrayDereference    	@*
 Term            	Key                 	
 Term            	BareWord            	
 Operator        	Arrow               	=>
